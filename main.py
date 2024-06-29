@@ -114,3 +114,8 @@ class Dealer(Player):
         while self.total_score < 17:
             self.draw_card(deck)
         return self.hand
+    
+    #checks if the dealer has busted
+    def dealer_busted(self):
+        self.bust=True
+        print("Dealer busts!")
