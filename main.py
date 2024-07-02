@@ -171,3 +171,28 @@ class Game:
                 break
             else:
                 print("Invalid action. Please enter 'h' to hit or 's' to stand.")
+
+
+    #dealer draws cards until their score is 17 or higher
+    def dealer_turn(self):
+        while self.dealer.total_score < 17:
+            self.dealer.draw_card(self.deck)
+        print(f"Dealer's hand: {self.dealer.display_hand()} - Score: {self.dealer.total_score}")
+        if self.dealer.bust:
+            print("Dealer busts!")
+            Dealer.dealer_busted(self.dealer)
+
+
+
+    #determine the winner based on the final scores
+    def determine_winner(self):
+        if self.player.bust:
+            return "Dealer wins!"
+        elif self.dealer.bust:
+            return "Player wins!"
+        elif self.player.total_score > self.dealer.total_score:
+            return "Player wins!"
+        elif self.player.total_score < self.dealer.total_score:
+            return "Dealer wins!"
+        else:
+            return "It's a tie!"
