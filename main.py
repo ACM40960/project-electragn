@@ -141,3 +141,33 @@ class Game:
     def show_hands(self):
         print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
         print(f"Dealer's initial card: {self.dealer.show_initial_card()}")
+
+
+    #player actions
+    def player_turn(self):
+        while not self.player.bust:
+            print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
+            
+            #display the dealer's visible card to use in the strategy function
+            dealer_card = self.dealer.show_initial_card()
+            print(f"Dealer's visible card: {dealer_card}")
+            
+            #option for decision based on whether a strategy is provided
+            if self.strategy:
+                action = self.strategy(self.dealer.total_score,self.player.total_score)
+                print(f"Strategy recommends to '{action}'.")
+            else:
+                action = str(input("Choose action: Hit (h) or Stand (s): "))
+                action=action.lower()
+
+            #execute the chosen action
+            if action == 'hit':
+                self.player.draw_card(self.deck)
+                if self.player.bust:
+                    print("Player busts!")
+                    break
+            elif action == 'stand':
+                print("Player stands.")
+                break
+            else:
+                print("Invalid action. Please enter 'h' to hit or 's' to stand.")
