@@ -119,3 +119,25 @@ class Dealer(Player):
     def dealer_busted(self):
         self.bust=True
         print("Dealer busts!")
+
+
+
+class Game:
+    #initialize the game with a new deck, player and dealer
+    def __init__(self, strategy):
+        self.deck = Deck()
+        self.player = Player()
+        self.dealer = Dealer()
+        self.strategy = strategy
+
+    #deal two cards each to the player and the dealer
+    def deal_cards(self):
+        self.player.draw_card(self.deck)
+        self.player.draw_card(self.deck)
+        self.dealer.draw_card(self.deck)
+        self.dealer.draw_card(self.deck)
+
+    #display the player's hand and the dealer's initial card
+    def show_hands(self):
+        print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
+        print(f"Dealer's initial card: {self.dealer.show_initial_card()}")
