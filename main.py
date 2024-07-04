@@ -193,3 +193,17 @@ class Game:
             return "Dealer wins!"
         else:
             return "It's a tie!"
+        
+
+    #play a round of the game
+    def play_round(self):
+        #refresh the deck each round
+        self.deck = Deck()  
+        self.player.reset_hand()
+        self.dealer.reset_hand()
+        self.deal_cards()
+        self.show_hands()
+        self.player_turn()
+        if not self.player.bust:
+            self.dealer_turn()
+        print(self.determine_winner())
