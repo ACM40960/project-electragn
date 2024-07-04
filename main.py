@@ -14,16 +14,13 @@ class Card:
 
 #Deck Class: set up the deck, shuffle it, and handle card draws
 class Deck:
-    #represents a deck of cards to be used in the game
-    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
-
     #initialises the deck by creating a full set of 52 cards and then shuffling them
-    def __init__(self):
+    def __init__(self, num_decks=1):
         self.cards = []
-        for suit in self.suits:
-            for rank in self.ranks:
-                self.cards.append(Card(suit, rank))
+        for _ in range(num_decks):
+            for suit in ['Hearts', 'Diamonds', 'Clubs', 'Spades']:
+                for rank in ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']:
+                    self.cards.append(Card(suit, rank))
         self.shuffle()
 
     #shuffles the deck to randomise the order of the cards
@@ -124,8 +121,8 @@ class Dealer(Player):
 
 class Game:
     #initialize the game with a new deck, player and dealer
-    def __init__(self, strategy):
-        self.deck = Deck()
+    def __init__(self, strategy, num_decks=1):
+        self.deck = Deck(num_decks)
         self.player = Player()
         self.dealer = Dealer()
         self.strategy = strategy
