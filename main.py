@@ -213,3 +213,21 @@ class Game:
             return "losses"
         else:
             return "ties" 
+        
+
+
+#run a simulation of the game with a given strategy, number of trials and number of decks
+def run_simulation(strategy, num_trials=10000, num_decks=1):
+    #dictionary to keep track of wins, losses, ties and scores
+    results = {'wins': 0, 'losses': 0, 'ties': 0, 'player_scores': [], 'dealer_scores': []}
+    for _ in range(num_trials):
+        #create a new game instance with the specified strategy and number of decks
+        game = Game(strategy, num_decks)
+        print(f"--------------Running simulation with {num_decks} decks.--------------")
+        #store the result of the round
+        result = game.play_round()
+        results[result] += 1
+        #add player's and dealer's total scores to the results dictionary
+        results['player_scores'].append(game.player.total_score)
+        results['dealer_scores'].append(game.dealer.total_score)
+    return results
