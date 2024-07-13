@@ -32,7 +32,7 @@ class Deck:
         if not self.cards:
             #reinitialises the deck and shuffles again if out of cards
             self.__init__()  
-            print("Deck was empty. Reshuffled.")
+            print("Deck was empty, reshuffled.")
         return self.cards.pop()
 
     #returns a string representation showing the number of cards left in the deck
@@ -207,3 +207,9 @@ class Game:
         if not self.player.bust:
             self.dealer_turn()
         print(self.determine_winner())
+        if self.determine_winner() == "Player wins!":
+            return "wins"
+        elif self.determine_winner() == "Dealer wins!":
+            return "losses"
+        else:
+            return "ties" 
