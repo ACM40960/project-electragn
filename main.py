@@ -201,6 +201,53 @@ def convert_rank_to_value(card):
         return int(card.rank)
 
 
+#Strategies
+
+#basic strategy: decisions based on the player's score and the dealer's visible card
+def basic_strategy(game, player, dealer):
+    player_score = player.total_score
+    print(f"Player_score: {player_score}")
+    dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
+
+    if player_score <= 11:
+        return "hit"
+    elif player_score <= 16:
+        if dealer_rank_value >= 7:
+            return "hit"
+        else:
+            return "stand"
+    else:
+        return "stand"
+
+
+#aggressive strategy: player takes more risks
+def aggressive_strategy(game, player, dealer):
+    player_score = player.total_score
+    dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
+
+    if player_score <= 15:
+        return "hit"
+    elif 16 <= player_score <= 17 and dealer_rank_value in [9, 10, 11]:
+        return "hit"
+    else:
+        return "stand"
+
+
+#cnservative strategy: player avoids risks
+def conservative_strategy(game, player, dealer):
+    player_score = player.total_score
+    dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
+
+    if player_score <= 11:
+        return "hit"
+    elif player_score == 12:
+        if dealer_rank_value >= 7:
+            return "hit"
+        else:
+            return "stand"
+    else:
+        return "stand"
+
 
 #run a simulation of the game with a given strategy, number of trials and number of decks
 def run_simulation(strategy, num_trials=10000, num_decks=1):
