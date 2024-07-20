@@ -256,7 +256,6 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
     for _ in range(num_trials):
         #create a new game instance with the specified strategy and number of decks
         game = Game(strategy, num_decks)
-        print(f"--------------Running simulation with {num_decks} decks.--------------")
         #store the result of the round
         result = game.play_round()
         results[result] += 1
@@ -264,7 +263,6 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
         results['player_scores'].append(game.player.total_score)
         results['dealer_scores'].append(game.dealer.total_score)
     return results
-
 
 
 #run the game with a given strategy
