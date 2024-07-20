@@ -264,3 +264,17 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
         results['player_scores'].append(game.player.total_score)
         results['dealer_scores'].append(game.dealer.total_score)
     return results
+
+
+
+#run the game with a given strategy
+def main():
+    #run the simulation with different number of decks
+    num_decks_list=[1, 2, 4, 6, 8]
+    for num_decks in num_decks_list:
+        print(f"--------------Running simulation with {num_decks} decks--------------")
+        results = run_simulation(basic_strategy, num_trials=1000, num_decks=num_decks)
+
+
+if __name__ == "__main__":
+    main()
