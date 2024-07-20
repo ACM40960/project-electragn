@@ -127,26 +127,22 @@ class Game:
     #display the player's hand and the dealer's initial card
     def show_hands(self):
         print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
-        print(f"Dealer's initial card: {self.dealer.show_initial_card()}")
+        print(f"Dealer's initial card: {self.dealer.show_uphand()}")
 
 
     #player actions
     def player_turn(self):
         while not self.player.bust:
-            print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
-            
-            #display the dealer's visible card to use in the strategy function
-            dealer_card = self.dealer.show_initial_card()
-            print(f"Dealer's visible card: {dealer_card}")
+            #display the player's hand and the dealer's visible card
+            self.show_hands()
+            dealer_card = self.dealer.show_uphand()
             
             #option for decision based on whether a strategy is provided
             if self.strategy:
-                action = self.strategy(self.dealer.total_score,self.player.total_score)
+                action = self.strategy(self, self.player, self.dealer)
                 print(f"Strategy recommends to '{action}'.")
             else:
-                action = str(input("Choose action: Hit (h) or Stand (s): "))
-                action=action.lower()
-
+                action = input("Choose action: Hit (h) or Stand (s): ").lower()
             #execute the chosen action
             if action == 'hit':
                 self.player.draw_card(self.deck)
@@ -162,48 +158,48 @@ class Game:
 
     #dealer draws cards until their score is 17 or higher
     def dealer_turn(self):
-        while self.dealer.total_score < 17:
-            self.dealer.draw_card(self.deck)
+        self.dealer.draw_card(self.deck)
         print(f"Dealer's hand: {self.dealer.display_hand()} - Score: {self.dealer.total_score}")
         if self.dealer.bust:
             print("Dealer busts!")
-            Dealer.dealer_busted(self.dealer)
-
 
 
     #determine the winner based on the final scores
     def determine_winner(self):
         if self.player.bust:
-            return "Dealer wins!"
+            return "losses"
         elif self.dealer.bust:
-            return "Player wins!"
+            return "wins"
         elif self.player.total_score > self.dealer.total_score:
-            return "Player wins!"
+            return "wins"
         elif self.player.total_score < self.dealer.total_score:
-            return "Dealer wins!"
+            return "losses"
         else:
-            return "It's a tie!"
+            return "ties"
         
 
     #play a round of the game
     def play_round(self):
-        #refresh the deck each round
-        self.deck = Deck()  
         self.player.reset_hand()
         self.dealer.reset_hand()
         self.deal_cards()
-        self.show_hands()
         self.player_turn()
         if not self.player.bust:
             self.dealer_turn()
-        print(self.determine_winner())
-        if self.determine_winner() == "Player wins!":
-            return "wins"
-        elif self.determine_winner() == "Dealer wins!":
-            return "losses"
-        else:
-            return "ties" 
+        result = self.determine_winner()
+        print(result)
+        return result.lower().replace("!", "s")
         
+        
+#function to convert the rank of a card to a numerical value   
+def convert_rank_to_value(card):
+    if card.rank == "Ace":
+        return 11
+    elif card.rank in ["Jack", "Queen", "King"]:
+        return 10
+    else:
+        return int(card.rank)
+
 
 
 #run a simulation of the game with a given strategy, number of trials and number of decks
