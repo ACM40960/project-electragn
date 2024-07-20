@@ -31,7 +31,7 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.cards)
 
-    #draws the top card from the deck and returs it
+    #draws the top card from the deck and returns it
     def draw_card(self):
         if not self.cards:
             #reinitialises the deck and shuffles again if out of cards
@@ -75,14 +75,12 @@ class Player:
                 self.total_score += 10  
             else:
                 #numeric cards are worth their number
-                self.total_score += int(card.rank)  
-        
+                self.total_score += int(card.rank)          
         #adjust score if it's over 21 while there are Aces in hand
         while self.total_score > 21 and aces:
             #ace is worth 1 instead of 11
             self.total_score -= 10
-            aces -= 1
-        
+            aces -= 1      
         self.bust = self.total_score > 21
 
     #returns a string representation of the player's hand
@@ -100,28 +98,16 @@ class Player:
 #Dealer Class: Blackjack dealer
 class Dealer(Player):
     
-    def __init__(self):
-        super().__init__()
+    #returns the dealer's visible card
+    def show_uphand(self):
+        return self.hand[0] if self.hand else None
 
-    #shows the first card in the dealer's hand which is visible to players
-    def show_initial_card(self):
-        if self.hand:
-            return str(self.hand[0])
-        else:
-            return "No card visible"
-        
     #dealer draws cards until the score is at least 17
     def take_turn(self, deck):
         while self.total_score < 17:
             self.draw_card(deck)
         return self.hand
     
-    #checks if the dealer has busted
-    def dealer_busted(self):
-        self.bust=True
-        print("Dealer busts!")
-
-
 
 class Game:
     #initialize the game with a new deck, player and dealer
