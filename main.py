@@ -10,6 +10,10 @@ class Card:
     #returns a readable string representation of the card
     def __repr__(self):
         return f'{self.rank} of {self.suit}'
+    
+    #returns the rank of the card
+    def return_rank(self):
+        return self.rank
 
 
 #Deck Class: set up the deck, shuffle it, and handle card draws
