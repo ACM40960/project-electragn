@@ -206,7 +206,6 @@ def convert_rank_to_value(card):
 #basic strategy: decisions based on the player's score and the dealer's visible card
 def basic_strategy(game, player, dealer):
     player_score = player.total_score
-    print(f"Player_score: {player_score}")
     dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
 
     if player_score <= 11:
