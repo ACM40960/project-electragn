@@ -283,12 +283,21 @@ def analyze_results(results):
 
 #run the game with a given strategy
 def main():
+    #list of strategies to compare
+    strategies = [basic_strategy, aggressive_strategy, conservative_strategy]
     #run the simulation with different number of decks
     num_decks_list=[1, 2, 4, 6, 8]
-    for num_decks in num_decks_list:
-        print(f"--------------Running simulation with {num_decks} decks--------------")
-        results = run_simulation(basic_strategy, num_trials=1000, num_decks=num_decks)
-        analyze_results(results)
+    results_data = []   
+    for strags in strategies:
+        strategy_name = strags.__name__
+        print(f"=================Running simulations for {strategy_name}=================")
+        for num_decks in num_decks_list:
+            print(f"--------------Running simulation with {num_decks} decks--------------")
+            results = run_simulation(strags, num_trials=1000, num_decks=num_decks)
+            analyze_results(results)
 
+            
 if __name__ == "__main__":
     main()
+
+
