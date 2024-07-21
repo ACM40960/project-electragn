@@ -284,7 +284,7 @@ def main():
     for num_decks in num_decks_list:
         print(f"--------------Running simulation with {num_decks} decks--------------")
         results = run_simulation(basic_strategy, num_trials=1000, num_decks=num_decks)
-
+        analyze_results(results)
 
 if __name__ == "__main__":
     main()
