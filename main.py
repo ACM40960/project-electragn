@@ -265,6 +265,18 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
     return results
 
 
+#analyze the results of the simulation
+def analyze_results(results):
+    total_games = results['wins']+results['losses']+results['ties']
+    print(f"Total games: {total_games}")
+    print(f"Wins: {results['wins']} ({results['wins'] / total_games * 100:.2f}%)")
+    print(f"Losses: {results['losses']} ({results['losses'] / total_games * 100:.2f}%)")
+    print(f"Ties: {results['ties']} ({results['ties'] / total_games * 100:.2f}%)")
+    print(f"Average Player Score: {sum(results['player_scores']) / len(results['player_scores']):.2f}")
+    print(f"Average Dealer Score: {sum(results['dealer_scores']) / len(results['dealer_scores']):.2f}")
+
+
+
 #run the game with a given strategy
 def main():
     #run the simulation with different number of decks
