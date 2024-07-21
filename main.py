@@ -192,7 +192,6 @@ class Game:
         if not self.player.bust:
             self.dealer_turn()
         result = self.determine_winner()
-        print(result)
         return result.lower().replace("!", "s")
         
         
@@ -296,7 +295,7 @@ def main():
             results = run_simulation(strags, num_trials=1000, num_decks=num_decks)
             analyze_results(results)
 
-            
+
 if __name__ == "__main__":
     main()
 
