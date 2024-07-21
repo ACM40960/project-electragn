@@ -271,13 +271,15 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
 #analyze the results of the simulation
 def analyze_results(results):
     total_games = results['wins']+results['losses']+results['ties']
+    #calculate the house edge as the percentage of losses minus wins
+    house_edge = (results['losses'] - results['wins']) / total_games * 100
     print(f"Total games: {total_games}")
     print(f"Wins: {results['wins']} ({results['wins'] / total_games * 100:.2f}%)")
     print(f"Losses: {results['losses']} ({results['losses'] / total_games * 100:.2f}%)")
     print(f"Ties: {results['ties']} ({results['ties'] / total_games * 100:.2f}%)")
     print(f"Average Player Score: {sum(results['player_scores']) / len(results['player_scores']):.2f}")
     print(f"Average Dealer Score: {sum(results['dealer_scores']) / len(results['dealer_scores']):.2f}")
-
+    print(f"House Edge: {house_edge:.2f}%")
 
 
 #run the game with a given strategy
