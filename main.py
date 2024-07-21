@@ -167,14 +167,19 @@ class Game:
     #determine the winner based on the final scores
     def determine_winner(self):
         if self.player.bust:
+            print("Player loses!")
             return "losses"
         elif self.dealer.bust:
+            print("Player wins!")
             return "wins"
         elif self.player.total_score > self.dealer.total_score:
+            print("Player wins!")
             return "wins"
         elif self.player.total_score < self.dealer.total_score:
+            print("Player loses!")
             return "losses"
         else:
+            print("It's a tie!")
             return "ties"
         
 
