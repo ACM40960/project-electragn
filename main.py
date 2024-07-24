@@ -35,7 +35,8 @@ class Deck:
     def deal_card(self):
         if not self.cards:
             #reinitialises the deck and shuffles again if out of cards
-            self.__init__()  
+            self.__init__()
+            self.shuffle()  
             print("Deck was empty, reshuffled.")
         return self.cards.pop()
 
