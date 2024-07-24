@@ -45,8 +45,46 @@ class Deck:
     #returns a string representation showing the number of cards left in the deck
     def __repr__(self):
         return f'Deck of {len(self.cards)} cards'
-    
-    
+
+
+#Hand Class: Blackjack hand
+class Hand:
+
+    #defines a hand with an empty list of cards, a total score, and a bust status
+    def __init__(self):
+        self.cards = []
+        self.total_score = 0
+        self.bust = False
+
+    #draws a card from the deck, adds it to the hand and updates the score
+    def draw_card(self, deck):
+        card = deck.deal_card()
+        self.cards.append(card)
+        self.calculate_score()
+        return card            
+   
+    #calculates the score of the hand and adjusts the Aces as needed (1 or 11)
+    def calculate_score(self):
+        aces = 0
+        self.total_score = 0
+        for card in self.cards:
+            if card.rank == "Ace":
+                aces += 1
+                self.total_score += 11
+            elif card.rank in ["Jack", "Queen", "King"]:
+                self.total_score += 10
+            else:
+                self.total_score += int(card.rank)
+        while self.total_score > 21 and aces:
+            self.total_score -= 10
+            aces -= 1
+        self.bust = self.total_score > 21
+
+    #returns a string representation of the hand
+    def display_hand(self):
+        return ", ".join(str(card) for card in self.cards)
+
+
 #Player Class: Blackjack player
 class Player:
     
