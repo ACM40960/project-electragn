@@ -32,7 +32,7 @@ class Deck:
         random.shuffle(self.cards)
 
     #draws the top card from the deck and returns it
-    def draw_card(self):
+    def deal_card(self):
         if not self.cards:
             #reinitialises the deck and shuffles again if out of cards
             self.__init__()  
@@ -55,7 +55,7 @@ class Player:
 
     #draws a card from the deck, adds it to the player's hand, and updates the score
     def draw_card(self, deck):
-        card = deck.draw_card()
+        card = deck.deal_card()
         self.hand.append(card)
         self.calculate_score()
         return card
