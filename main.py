@@ -1,4 +1,6 @@
 import random
+import csv
+
 
 #Card Class: define card ranks and suits
 class Card:
@@ -283,6 +285,18 @@ def analyze_results(results):
     print(f"House Edge: {house_edge:.2f}%")
 
 
+#function to format results into a string
+def format_results(results):
+    #formatted string from the results dictionary
+    formatted_results = (f"Wins: {results['wins']}, "
+                         f"Losses: {results['losses']}, "
+                         f"Ties: {results['ties']}, "
+                         f"Player Scores: {', '.join(map(str, results['player_scores']))}, "
+                         f"Dealer Scores: {', '.join(map(str, results['dealer_scores']))}")
+    return formatted_results
+
+
+
 #run the game with a given strategy
 def main():
     #list of strategies to compare
@@ -297,6 +311,24 @@ def main():
             print(f"--------------Running simulation with {num_decks} decks--------------")
             results = run_simulation(strats, num_trials=1000, num_decks=num_decks)
             analyze_results(results)
+
+
+            #append individual results components instead of formatted string to allow for easier CSV writing
+            results_data.append([strategy_name, 
+                                 num_decks, 
+                                 results['wins'], 
+                                 results['losses'], 
+                                 results['ties'],
+                                 ', '.join(map(str, results['player_scores'])), 
+                                 ', '.join(map(str, results['dealer_scores']))
+            ])
+
+    #save all results to a single CSV file with expanded headers
+    with open('simulation_results_detailed.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'Player Scores', 'Dealer Scores'])
+        writer.writerows(results_data)
+
 
 
 if __name__ == "__main__":
