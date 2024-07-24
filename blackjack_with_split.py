@@ -155,16 +155,21 @@ class Player:
 
 #Dealer Class: Blackjack dealer
 class Dealer(Player):
+
+    #inherits from the Player class, but only has one hand
+    def __init__(self):
+        super().__init__()
+        self.hands = [Hand()]
     
     #returns the dealer's visible card
     def show_uphand(self):
-        return self.hand[0] if self.hand else None
+        return self.hands[0].cards[0] if self.hands[0].cards else None
 
     #dealer draws cards until the score is at least 17
     def take_turn(self, deck):
-        while self.total_score < 17:
+        while self.hands[0].total_score < 17:
             self.draw_card(deck)
-        return self.hand
+        return self.hands[0].cards
     
 
 class Game:
