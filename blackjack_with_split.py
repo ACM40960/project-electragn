@@ -117,7 +117,7 @@ class Player:
 
 
     #resets the player's hand and score for a new round
-    def reset_hand(self):
+    def reset_hands(self):
         self.hands = [Hand()]
 
 
