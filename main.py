@@ -290,12 +290,12 @@ def main():
     #run the simulation with different number of decks
     num_decks_list=[1, 2, 4, 6, 8]
     results_data = []   
-    for strags in strategies:
-        strategy_name = strags.__name__
+    for strats in strategies:
+        strategy_name = strats.__name__
         print(f"=================Running simulations for {strategy_name}=================")
         for num_decks in num_decks_list:
             print(f"--------------Running simulation with {num_decks} decks--------------")
-            results = run_simulation(strags, num_trials=1000, num_decks=num_decks)
+            results = run_simulation(strats, num_trials=1000, num_decks=num_decks)
             analyze_results(results)
 
 
