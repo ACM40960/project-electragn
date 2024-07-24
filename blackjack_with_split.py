@@ -92,53 +92,66 @@ class Hand:
 #Player Class: Blackjack player
 class Player:
     
-    #defines the player with an empty hand, score and bust status
+    #defines the player with an empty hand
     def __init__(self):
-        self.hand = []
-        self.total_score = 0
-        self.bust = False
+        self.hands = [Hand()]
 
-    #draws a card from the deck, adds it to the player's hand, and updates the score
-    def draw_card(self, deck):
-        card = deck.deal_card()
-        self.hand.append(card)
-        self.calculate_score()
-        return card
+    #draws a card from the deck and adds it to the player's hand
+    def draw_card(self, deck, hand_index=0):
+        return self.hands[hand_index].draw_card(deck)
+
+
+    #split the player's hand into two separate hands if the cards have the same rank
+    def split(self, deck):
+        if (len(self.hands) == 1
+            and self.hands[0].cards[0].rank == self.hands[0].cards[1].rank):
+            hand1 = Hand()
+            hand2 = Hand()
+            hand1.cards.append(self.hands[0].cards[0])
+            hand2.cards.append(self.hands[0].cards[1])
+            hand1.draw_card(deck)
+            hand2.draw_card(deck)
+            self.hands = [hand1, hand2]
+            return True
+        return False
+
+
+    #resets the player's hand and score for a new round
+    def reset_hand(self):
+        self.hands = [Hand()]
+
+
+    #check if all hands are bust
+    def all_bust(self):
+        return all(hand.bust for hand in self.hands)
 
     #calculates the score of the player's hand and adjusting the Aces as needed (1 or 11)
     def calculate_score(self):
         aces = 0
         self.total_score = 0
-        
+
         for card in self.hand:
-            if card.rank == 'Ace':
+            if card.rank == "Ace":
                 aces += 1
                 #ace is worth 11
-                self.total_score += 11  
-            elif card.rank in ['Jack', 'Queen', 'King']:
+                self.total_score += 11
+            elif card.rank in ["Jack", "Queen", "King"]:
                 #face cards are worth 10
-                self.total_score += 10  
+                self.total_score += 10
             else:
                 #numeric cards are worth their number
-                self.total_score += int(card.rank)          
+                self.total_score += int(card.rank)
         #adjust score if it's over 21 while there are Aces in hand
         while self.total_score > 21 and aces:
             #ace is worth 1 instead of 11
             self.total_score -= 10
-            aces -= 1      
+            aces -= 1
         self.bust = self.total_score > 21
 
     #returns a string representation of the player's hand
     def display_hand(self):
-        return ', '.join(str(card) for card in self.hand)
-
-
-    #resets the player's hand and score for a new round
-    def reset_hand(self):
-        self.hand.clear()
-        self.total_score = 0
-        self.bust = False
-
+        return ", ".join(str(card) for card in self.hand)
+    
 
 #Dealer Class: Blackjack dealer
 class Dealer(Player):
