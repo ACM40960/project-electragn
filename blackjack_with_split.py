@@ -17,6 +17,10 @@ class Card:
     def return_rank(self):
         return self.rank
 
+    #returns the suit of the card
+    def return_suit(self):
+        return self.suit
+
 
 #Deck Class: set up the deck, shuffle it, and handle card draws
 class Deck:
