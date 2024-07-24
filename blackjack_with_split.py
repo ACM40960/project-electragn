@@ -188,57 +188,64 @@ class Game:
         self.dealer.draw_card(self.deck)
 
     #display the player's hand and the dealer's initial card
-    def show_hands(self):
-        print(f"Player's hand: {self.player.display_hand()} - Score: {self.player.total_score}")
+    def show_hands(self, hand_index=0):
+        print(f"Player's hand: {self.player.hands[hand_index].display_hand()} - Score: {self.player.hands[hand_index].total_score}")
         print(f"Dealer's initial card: {self.dealer.show_uphand()}")
 
 
     #player actions
-    def player_turn(self):
-        while not self.player.bust:
+    def player_turn(self, hand_index=0):
+        while not self.player.hands[hand_index].bust:
             #display the player's hand and the dealer's visible card
-            self.show_hands()
+            self.show_hands(hand_index)
             dealer_card = self.dealer.show_uphand()
             
-            #option for decision based on whether a strategy is provided
             if self.strategy:
-                action = self.strategy(self, self.player, self.dealer)
+                action = self.strategy(self, self.player.hands[hand_index], self.dealer)
                 print(f"Strategy recommends to '{action}'.")
             else:
-                action = input("Choose action: Hit (h) or Stand (s): ").lower()
+                action = input("Choose action: Hit (h), Stand (s), or Split (p): ").lower()
             #execute the chosen action
             if action == 'hit':
-                self.player.draw_card(self.deck)
-                if self.player.bust:
+                self.player.draw_card(self.deck, hand_index)
+                if self.player.hands[hand_index].bust:
                     print("Player busts!")
                     break
             elif action == 'stand':
                 print("Player stands.")
                 break
+            elif action == "split" and len(self.player.hands) == 1:
+                if self.player.split(self.deck):
+                    print("Player splits!")
+                    self.player_turn(0)
+                    self.player_turn(1)
+                    return
+                else:
+                    print("Cannot split.")           
             else:
-                print("Invalid action. Please enter 'h' to hit or 's' to stand.")
+                print("Invalid action. Please enter 'h' to hit, 's' to stand, or 'p' to split.")
 
 
     #dealer draws cards until their score is 17 or higher
     def dealer_turn(self):
-        self.dealer.draw_card(self.deck)
-        print(f"Dealer's hand: {self.dealer.display_hand()} - Score: {self.dealer.total_score}")
-        if self.dealer.bust:
+        self.dealer.take_turn(self.deck)
+        print(f"Dealer's hand: {self.dealer.hands[0].display_hand()} - Score: {self.dealer.hands[0].total_score}")
+        if self.dealer.hands[0].bust:
             print("Dealer busts!")
 
 
     #determine the winner based on the final scores
-    def determine_winner(self):
-        if self.player.bust:
+    def determine_winner(self, hand):
+        if hand.bust:
             print("Player loses!")
             return "losses"
-        elif self.dealer.bust:
+        elif self.dealer.hands[0].bust:
             print("Player wins!")
             return "wins"
-        elif self.player.total_score > self.dealer.total_score:
+        elif hand.total_score > self.dealer.hands[0].total_score:
             print("Player wins!")
             return "wins"
-        elif self.player.total_score < self.dealer.total_score:
+        elif hand.total_score < self.dealer.hands[0].total_score:
             print("Player loses!")
             return "losses"
         else:
@@ -248,14 +255,16 @@ class Game:
 
     #play a round of the game
     def play_round(self):
-        self.player.reset_hand()
-        self.dealer.reset_hand()
+        self.player.reset_hands()
+        self.dealer.reset_hands()
         self.deal_cards()
         self.player_turn()
-        if not self.player.bust:
+        if not self.player.all_bust():
             self.dealer_turn()
-        result = self.determine_winner()
-        return result.lower().replace("!", "s")
+        results = []
+        for hand in self.player.hands:
+            results.append(self.determine_winner(hand))
+        return results
         
         
 #function to convert the rank of a card to a numerical value   
