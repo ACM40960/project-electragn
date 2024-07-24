@@ -283,6 +283,7 @@ def analyze_results(results):
     print(f"Average Player Score: {sum(results['player_scores']) / len(results['player_scores']):.2f}")
     print(f"Average Dealer Score: {sum(results['dealer_scores']) / len(results['dealer_scores']):.2f}")
     print(f"House Edge: {house_edge:.2f}%")
+    return house_edge
 
 
 #function to format results into a string
@@ -310,8 +311,7 @@ def main():
         for num_decks in num_decks_list:
             print(f"--------------Running simulation with {num_decks} decks--------------")
             results = run_simulation(strats, num_trials=1000, num_decks=num_decks)
-            analyze_results(results)
-
+            house_edge = analyze_results(results)
 
             #append individual results components instead of formatted string to allow for easier CSV writing
             results_data.append([strategy_name, 
@@ -319,6 +319,7 @@ def main():
                                  results['wins'], 
                                  results['losses'], 
                                  results['ties'],
+                                 f"{house_edge:.2f}%",
                                  ', '.join(map(str, results['player_scores'])), 
                                  ', '.join(map(str, results['dealer_scores']))
             ])
@@ -326,7 +327,7 @@ def main():
     #save all results to a single CSV file with expanded headers
     with open('simulation_results_detailed.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'Player Scores', 'Dealer Scores'])
+        writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
         writer.writerows(results_data)
 
 
