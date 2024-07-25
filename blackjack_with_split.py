@@ -332,11 +332,12 @@ def run_simulation(strategy, num_trials=10000, num_decks=1):
         #create a new game instance with the specified strategy and number of decks
         game = Game(strategy, num_decks)
         #store the result of the round
-        result = game.play_round()
-        results[result] += 1
+        round_results = game.play_round()
+        for result in round_results:
+            results[result] += 1
         #add player's and dealer's total scores to the results dictionary
-        results['player_scores'].append(game.player.total_score)
-        results['dealer_scores'].append(game.dealer.total_score)
+        results["player_scores"].append(game.player.hands[0].total_score)
+        results["dealer_scores"].append(game.dealer.hands[0].total_score)
     return results
 
 
