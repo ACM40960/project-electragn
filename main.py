@@ -1,6 +1,6 @@
 import random
 import csv
-
+import os
 
 #Card Class: define card ranks and suits
 class Card:
