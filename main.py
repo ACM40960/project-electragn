@@ -1,6 +1,7 @@
 import random
 import csv
 import os
+import matplotlib.pyplot as plt
 
 #Card Class: define card ranks and suits
 class Card:
@@ -285,6 +286,47 @@ def analyze_results(results):
     print(f"House Edge: {house_edge:.2f}%")
     return house_edge
 
+#charts from the results data
+def generate_charts(results_data):
+    strategies = list(set([data[0] for data in results_data]))
+    num_decks_list = sorted(list(set([data[1] for data in results_data])))
+
+    #plot House Edge for all strategies
+    plt.figure(figsize=(10, 5))
+    for strategy in strategies:
+        strategy_data = [data for data in results_data if data[0] == strategy]
+        num_decks = [data[1] for data in strategy_data]
+        house_edges = [float(data[5].strip('%')) for data in strategy_data]
+        plt.plot(num_decks, house_edges, marker='o', linestyle='-', label=strategy)
+
+    #labels and title
+    plt.xlabel('Number of Decks')
+    plt.ylabel('House Edge (%)')
+    plt.title('House Edge by Number of Decks for All Strategies')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+    #plot Wins, Losses, and Ties for each strategy
+    for strategy in strategies:
+        strategy_data = [data for data in results_data if data[0] == strategy]
+        num_decks = [data[1] for data in strategy_data]
+        wins = [data[2] for data in strategy_data]
+        losses = [data[3] for data in strategy_data]
+        ties = [data[4] for data in strategy_data]
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(num_decks, wins, marker='o', linestyle='-', label='Wins')
+        plt.plot(num_decks, losses, marker='o', linestyle='-', label='Losses')
+        plt.plot(num_decks, ties, marker='o', linestyle='-', label='Ties', color='green')
+        plt.xlabel('Number of Decks')
+        plt.ylabel('Count')
+        plt.title(f'Wins, Losses, and Ties by Number of Decks for {strategy}')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
+
 
 #function to format results into a string
 def format_results(results):
@@ -330,6 +372,8 @@ def main():
         writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
         writer.writerows(results_data)
 
+
+    generate_charts(results_data) 
 
 
 if __name__ == "__main__":
