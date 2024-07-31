@@ -305,7 +305,8 @@ def generate_charts(results_data):
     plt.title('House Edge by Number of Decks for All Strategies')
     plt.legend()
     plt.grid(True)
-    plt.show()
+    plt.savefig('house_edge_comparison.png')
+    plt.close()
 
 
     #plot Wins, Losses, and Ties for each strategy
@@ -325,7 +326,8 @@ def generate_charts(results_data):
         plt.title(f'Wins, Losses, and Ties by Number of Decks for {strategy}')
         plt.grid(True)
         plt.legend()
-        plt.show()
+        plt.savefig(f'{strategy}_results.png')
+        plt.close()
 
 
 #function to format results into a string
