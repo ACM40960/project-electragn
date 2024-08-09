@@ -257,7 +257,7 @@ def conservative_strategy(game, player, dealer):
 
 
 #run a simulation of the game with a given strategy, number of trials and number of decks
-def run_simulation(strategy, num_trials=10000, num_decks=1):
+def run_simulation(strategy, num_trials=100000, num_decks=1):
     #dictionary to keep track of wins, losses, ties and scores
     results = {'wins': 0, 'losses': 0, 'ties': 0, 'player_scores': [], 'dealer_scores': []}
     for _ in range(num_trials):
