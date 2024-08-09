@@ -4,23 +4,23 @@ This project presents a simulation of the game of Blackjack with the use of the 
 
 ## **Table of Contents**
 
-1\. [Getting started](\#⚡️-getting-started)
+1. [Getting started](#⚡️-getting-started)
 
-2\. [Project Structure](\#⚙️-project-structure)
+2. [Project Structure](#⚙️-project-structure)
 
-3\. [Methodology](\#💡-methodology)
+3. [Methodology](#💡-methodology)
 
-4\. [How to Run](\#🏃‍♂️-how-to-run)
+4. [How to Run](#🏃‍♂️-how-to-run)
 
-5\. [Limitations](\#⚠️-limitations)
+5. [Limitations](#⚠️-limitations)
 
-6\. [Future Scope](\#🎯-future-scope)
+6. [Future Scope](#🎯-future-scope)
 
-7\. [Conclusion](\#📖-conclusion)
+7. [Conclusion](#📖-conclusion)
 
-8\. [References](\#📚-references)
+8. [References](#📚-references)
 
-9\. [Contributing](\#👍-contributing)
+9. [Contributing](#👍-contributing)
 
 ## **⚡️ Getting started** 
 
