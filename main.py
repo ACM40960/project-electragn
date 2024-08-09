@@ -162,7 +162,7 @@ class Game:
 
     #dealer draws cards until their score is 17 or higher
     def dealer_turn(self):
-        self.dealer.draw_card(self.deck)
+        self.dealer.take_turn(self.deck)
         print(f"Dealer's hand: {self.dealer.display_hand()} - Score: {self.dealer.total_score}")
         if self.dealer.bust:
             print("Dealer busts!")
