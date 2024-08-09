@@ -4,7 +4,7 @@ This project presents a simulation of the game of Blackjack with the use of the 
 
 ## **Table of Contents**
 
-1. [Getting started](#⚡️-getting-started)
+1. [Getting started](#getting-started)
 
 2. [Project Structure](#⚙️-project-structure)
 
@@ -22,7 +22,7 @@ This project presents a simulation of the game of Blackjack with the use of the 
 
 9. [Contributing](#👍-contributing)
 
-## **⚡️ Getting started** 
+## **Getting started** 
 
 **Prerequisites:**
 
