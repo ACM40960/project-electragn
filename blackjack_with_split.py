@@ -376,7 +376,7 @@ def generate_charts(results_data):
     plt.title('House Edge by Number of Decks for All Strategies')
     plt.legend()
     plt.grid(True)
-    plt.savefig('house_edge_comparison.png')
+    plt.savefig('house_edge_comparison_split.png')
     plt.close()
 
 
@@ -397,7 +397,7 @@ def generate_charts(results_data):
         plt.title(f'Wins, Losses, and Ties by Number of Decks for {strategy}')
         plt.grid(True)
         plt.legend()
-        plt.savefig(f'{strategy}_results.png')
+        plt.savefig(f'{strategy}_results_split.png')
         plt.close()
 
 
@@ -442,7 +442,7 @@ def main():
 
     
     #save all results to a single CSV file with expanded headers
-    with open('simulation_results_detailed.csv', 'w', newline='') as file:
+    with open('simulation_results_detailed_with_split.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
         writer.writerows(results_data)
