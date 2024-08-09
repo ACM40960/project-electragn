@@ -22,7 +22,7 @@ This project presents a simulation of the game of Blackjack with the use of the 
 
 9. [Contributing](#contributing)
 
-## **⚡️ Getting started** 
+## ⚡️ Getting Started
 
 **Prerequisites:**
 
