@@ -4,25 +4,25 @@ This project presents a simulation of the game of Blackjack with the use of the 
 
 ## **Table of Contents**
 
-1. [Getting started](#⚡-getting-started)
+1. [Getting started](#getting-started)
 
-2. [Project Structure](#⚙️-project-structure)
+2. [Project Structure](#project-structure)
 
-3. [Methodology](#💡-methodology)
+3. [Methodology](#methodology)
 
-4. [How to Run](#🏃‍♂️-how-to-run)
+4. [How to Run](#how-to-run)
 
-5. [Limitations](#⚠️-limitations)
+5. [Limitations](#limitations)
 
-6. [Future Scope](#🎯-future-scope)
+6. [Future Scope](#future-scope)
 
-7. [Conclusion](#📖-conclusion)
+7. [Conclusion](#conclusion)
 
-8. [References](#📚-references)
+8. [References](#references)
 
-9. [Contributing](#👍-contributing)
+9. [Contributing](#contributing)
 
-## **⚡ Getting started** 
+## **Getting Started** 
 
 **Prerequisites:**
 
@@ -41,7 +41,7 @@ Clone the repository and navigate to the project directory. You can install the 
  pip install matplotlib pandas numpy
 ```
 
-## **⚙️ Project Structure** 
+## **Project Structure** 
 
 * `main.py`: The primary script to simulate the Blackjack game. It generates results and visualisations for different strategies.  
 * `blackjack_with_split.py`: An extended version of `main.py`, which includes an additional action, the split.  The split action allows players to separate a pair of cards of the same rank into two hands.  
@@ -53,7 +53,7 @@ Clone the repository and navigate to the project directory. You can install the 
   * `conservative_strategy_results.png`  
   * `house_edge_comparison.png`
 
-## **💡 Methodology** 
+## **Methodology** 
 
 This project utilises the Monte Carlo method to simulate thousands of blackjack hands under different strategies and deck conditions.Here are the key steps involved in the methodology:
 
@@ -108,7 +108,7 @@ Analyse the simulation results to compare the effectiveness of different strateg
 
       
 
-## **📊 Visual Insights (from our analysis)**
+## **Visual Insights (from our analysis)**
 
 **Pie charts for each strategy, summarising the wins, losses, and ties across all decks:**
 
@@ -120,7 +120,7 @@ Analyse the simulation results to compare the effectiveness of different strateg
 
 ## 
 
-## **🏃‍♂️ How to Run**
+## **How to Run**
 
 **Running the Main Simulation:**
 
@@ -150,7 +150,7 @@ To test if the 'split' action is functioning correctly:
 
 ## 
 
-## **⚠️ Limitations** 
+## **Limitations** 
 
 The primary limitations of this project include:
 
@@ -159,7 +159,7 @@ The primary limitations of this project include:
 * **Randomness**: Monte Carlo simulations rely on randomness, which means results can vary slightly between runs. Large numbers of iterations are used to mitigate this effect.
 
 
-## **🎯 Future Scope** 
+## **Future Scope** 
 
 1. Implement more advanced strategies.    
 2. Add a user interface for interactive play.   
@@ -167,7 +167,7 @@ The primary limitations of this project include:
 
 ## 
 
-## **📖 Conclusion**  
+## **Conclusion**  
 
 * Simulates Blackjack strategies including basic, aggressive, and conservative.  
 * Analyses outcomes as a function of the number of decks.  
@@ -175,7 +175,7 @@ The primary limitations of this project include:
 * Visualisations of win/loss/tie ratios and house edges.  
 * Detailed results output to CSV for further analysis.
 
-## **📚 References** 
+## **References** 
 
 \[1\]  [Roger R Baldwin, Wilbert E Cantey, Herbert Maisel, and James P Mc-Dermott. The optimum strategy in blackjack. Journal of the American Statistical Association, 51(275):429–439, 1956\.](https://www.tandfonline.com/doi/abs/10.1080/01621459.1956.10501334)
 
@@ -189,7 +189,7 @@ The primary limitations of this project include:
 
 ## 
 
-## **👍 Contributing** 
+## **Contributing** 
 
 Contributions are welcome\! Please fork this repository and submit pull requests. For major changes, open an issue first to discuss what you would like to change.
 
