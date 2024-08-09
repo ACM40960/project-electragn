@@ -368,14 +368,16 @@ def main():
                                  ', '.join(map(str, results['dealer_scores']))
             ])
 
+
+    generate_charts(results_data) 
+
+
     #save all results to a single CSV file with expanded headers
     with open('simulation_results_detailed.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
         writer.writerows(results_data)
 
-
-    generate_charts(results_data) 
 
 
 if __name__ == "__main__":
