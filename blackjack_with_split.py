@@ -103,16 +103,23 @@ class Player:
 
 
     #split the player's hand into two separate hands if the cards have the same rank
-    def split(self, deck):
+    def split(self, deck, dealer_upcard_rank):
+         #ensure there's only one hand and that it contains a pair           
         if (len(self.hands) == 1
             and self.hands[0].cards[0].rank == self.hands[0].cards[1].rank):
-            hand1 = Hand()
-            hand2 = Hand()
-            hand1.cards.append(self.hands[0].cards[0])
-            hand2.cards.append(self.hands[0].cards[1])
-            hand1.draw_card(deck)
-            hand2.draw_card(deck)
-            self.hands = [hand1, hand2]
+            #split the cards into two separate hands
+            first_hand = Hand()
+            second_hand = Hand()
+            first_hand.cards.append(self.hands[0].cards[0])
+            second_hand.cards.append(self.hands[0].cards[1])
+
+            #remove the original hand and replace with the two new hands
+            self.hands = [first_hand, second_hand]
+
+            #draw one card for each new hand
+            self.draw_card(deck, 0)
+            self.draw_card(deck, 1)
+
             return True
         return False
 
@@ -128,30 +135,13 @@ class Player:
 
     #calculates the score of the player's hand and adjusting the Aces as needed (1 or 11)
     def calculate_score(self):
-        aces = 0
-        self.total_score = 0
+        for hand in self.hands:
+            hand.calculate_score()   
 
-        for card in self.hand:
-            if card.rank == "Ace":
-                aces += 1
-                #ace is worth 11
-                self.total_score += 11
-            elif card.rank in ["Jack", "Queen", "King"]:
-                #face cards are worth 10
-                self.total_score += 10
-            else:
-                #numeric cards are worth their number
-                self.total_score += int(card.rank)
-        #adjust score if it's over 21 while there are Aces in hand
-        while self.total_score > 21 and aces:
-            #ace is worth 1 instead of 11
-            self.total_score -= 10
-            aces -= 1
-        self.bust = self.total_score > 21
 
     #returns a string representation of the player's hand
-    def display_hand(self):
-        return ", ".join(str(card) for card in self.hand)
+    def display_hand(self, hand_index):
+        return self.hands[hand_index].display_hand()    
     
 
 #Dealer Class: Blackjack dealer
@@ -205,7 +195,8 @@ class Game:
                 action = self.strategy(self, self.player.hands[hand_index], self.dealer)
                 print(f"Strategy recommends to '{action}'.")
             else:
-                action = input("Choose action: Hit (h), Stand (s), or Split (p): ").lower()
+                action = input("Choose action: Hit (hit), Stand (stand), or Split (split): ").lower()
+            
             #execute the chosen action
             if action == 'hit':
                 self.player.draw_card(self.deck, hand_index)
@@ -216,16 +207,17 @@ class Game:
                 print("Player stands.")
                 break
             elif action == "split" and len(self.player.hands) == 1:
-                if self.player.split(self.deck):
+                dealer_card_rank = self.dealer.show_uphand().rank
+                if self.player.split(self.deck, dealer_card_rank):
                     print("Player splits!")
                     self.player_turn(0)
                     self.player_turn(1)
                     return
                 else:
-                    print("Cannot split.")           
+                    print("Cannot split.")
+                    break                               
             else:
-                print("Invalid action. Please enter 'h' to hit, 's' to stand, or 'p' to split.")
-
+                print("Invalid action. Please enter 'hit' to hit, 'stand' to stand, or 'split' to split.")
 
     #dealer draws cards until their score is 17 or higher
     def dealer_turn(self):
@@ -285,6 +277,27 @@ def basic_strategy(game, player, dealer):
     player_score = player.total_score
     dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
 
+    #prevent additional splits if the player already has more than one hand
+    if len(game.player.hands) == 1:
+        #check if a split is possible
+        if (
+            len(player.cards) == 2
+            and player.cards[0].rank == player.cards[1].rank
+        ):
+            rank = player.cards[0].rank
+
+            #apply the split rules
+            if rank in ["Ace", "8"]:
+                return "split"
+            elif rank in ["5", "10"]:
+                return "stand"
+            elif rank in ["2", "3", "6", "7"] and 2 <= dealer_rank_value <= 7:
+                return "split"
+            elif rank == "9" and (
+                2 <= dealer_rank_value <= 6 or 8 <= dealer_rank_value <= 9
+            ):
+                return "split"
+            
     if player_score <= 11:
         return "hit"
     elif player_score <= 16:
@@ -295,12 +308,33 @@ def basic_strategy(game, player, dealer):
     else:
         return "stand"
 
+    #default action if no other conditions are met
+    return "stand"    
+
 
 #aggressive strategy: player takes more risks
 def aggressive_strategy(game, player, dealer):
     player_score = player.total_score
     dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
 
+    #prevent additional splits if the player already has more than one hand
+    if len(game.player.hands) == 1:
+        #check if a split is possible
+        if len(player.cards) == 2 and player.cards[0].rank == player.cards[1].rank:
+            rank = player.cards[0].rank
+
+            # apply the split rules
+            if rank in ["Ace", "8"]:
+                return "split"
+            elif rank in ["5", "10"]:
+                return "stand"
+            elif rank in ["2", "3", "6", "7"] and 2 <= dealer_rank_value <= 7:
+                return "split"
+            elif rank == "9" and (
+                2 <= dealer_rank_value <= 6 or 8 <= dealer_rank_value <= 9
+            ):
+                return "split"
+            
     if player_score <= 15:
         return "hit"
     elif 16 <= player_score <= 17 and dealer_rank_value in [9, 10, 11]:
@@ -308,12 +342,33 @@ def aggressive_strategy(game, player, dealer):
     else:
         return "stand"
 
+    #default action if no other conditions are met
+    return "stand"    
+
 
 #cnservative strategy: player avoids risks
 def conservative_strategy(game, player, dealer):
     player_score = player.total_score
     dealer_rank_value = convert_rank_to_value(dealer.show_uphand())
 
+    #prevent additional splits if the player already has more than one hand
+    if len(game.player.hands) == 1:
+        #check if a split is possible
+        if len(player.cards) == 2 and player.cards[0].rank == player.cards[1].rank:
+            rank = player.cards[0].rank
+
+            #apply the split rules
+            if rank in ["Ace", "8"]:
+                return "split"
+            elif rank in ["5", "10"]:
+                return "stand"
+            elif rank in ["2", "3", "6", "7"] and 2 <= dealer_rank_value <= 7:
+                return "split"
+            elif rank == "9" and (
+                2 <= dealer_rank_value <= 6 or 8 <= dealer_rank_value <= 9
+            ):
+                return "split"   
+            
     if player_score <= 11:
         return "hit"
     elif player_score == 12:
@@ -323,6 +378,10 @@ def conservative_strategy(game, player, dealer):
             return "stand"
     else:
         return "stand"
+    
+    #default action if no other conditions are met
+    return "stand"    
+
 
 
 #run a simulation of the game with a given strategy, number of trials and number of decks
