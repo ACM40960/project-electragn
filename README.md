@@ -131,7 +131,7 @@ Analyse the simulation results to compare the effectiveness of different strateg
 To run the primary Blackjack simulation and generate results:
 
 ```python
- main.py
+ python main.py
 ```
 
 **Running the Simulation with Split Action:**
@@ -139,7 +139,7 @@ To run the primary Blackjack simulation and generate results:
 To run the extended simulation that includes the 'split' action:
 
 ```python
- blackjack_with_split.py
+ python blackjack_with_split.py
 ```
 
 **Testing the Split Action:**
@@ -149,7 +149,7 @@ Notes \- The split action in \`blackjack\_with\_split.py\` is a rare event, henc
 To test if the 'split' action is functioning correctly:
 
 ```python
- -m unittest test_player_split.py
+ python -m unittest test_player_split.py
 ```
 
 ## 
