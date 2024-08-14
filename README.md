@@ -44,7 +44,11 @@ Clone the repository and navigate to the project directory. You can install the 
 ## **Project Structure** 
 
 * `main.py`: The primary script to simulate the Blackjack game. It generates results and visualisations for different strategies.  
-* `blackjack_with_split.py`: An extended version of `main.py`, which includes an additional action, the split.  The split action allows players to separate a pair of cards of the same rank into two hands.  
+* `blackjack_with_split.py`: An extended version of `main.py`, which includes an additional action, the split.  The split action allows players to separate a pair of cards of the same rank into two hands, especially:  
+  * Always split Aces and 8s  
+  * Never split 5s and 10s  
+  * Split 2s, 3s, 6s, and 7s if the dealer has 2-7  
+  * Split 9s if the dealer has 2-6 or 8-9    
 * `test_player_split.py`: Utilise unit testing to ensure that the split actions functions properly.  
 * `simulation_results_detailed.csv`: Contains detailed results of the simulations.  
 * Images:  
