@@ -5,29 +5,51 @@ from blackjack_with_split import Player, Deck, Hand, Card
 #!!To run: run "python -m unittest test_player_split.py" in terminal
 
 
-class TestPlayerSplit(unittest.TestCase):
-    def test_player_can_split(self):
-        #create a player and a deck
-        player = Player()
-        deck = Deck()
-        deck.shuffle()
+class TestPlayerSplitFunction(unittest.TestCase):
 
-        #simulate a hand where the player has two cards of the same rank
-        card1 = Card("Spades", "Queen")
-        card2 = Card("Diamonds", "Queen")
-        player.hands[0].cards = [card1, card2]
+    def setUp(self):
+        self.deck = Deck()
+        self.player = Player()
 
-        #attempt to split
-        result = player.split(deck)
+    def test_split_valid_pair(self):
+        #simulate a pair of 8s
+        self.player.hands[0].cards = [Card("Hearts", "8"), Card("Spades", "8")]
+        self.assertTrue(self.player.split(self.deck, "10"))
+        self.assertEqual(len(self.player.hands), 2)
+        self.assertEqual(self.player.hands[0].cards[0].rank, "8")
+        self.assertEqual(self.player.hands[1].cards[0].rank, "8")
 
-        #check if the split was successful
-        self.assertTrue(result)
-        self.assertEqual(len(player.hands), 2)
-        self.assertNotEqual(player.hands[0].cards[1], player.hands[1].cards[1])
+    def test_split_invalid_pair(self):
+        #simulate a non-pair hand
+        self.player.hands[0].cards = [Card("Hearts", "8"), Card("Spades", "7")]
+        self.assertFalse(self.player.split(self.deck, "10"))
+        self.assertEqual(len(self.player.hands), 1)
 
-        #check if the hands contain the correct initial cards
-        self.assertEqual(player.hands[0].cards[0], card1)
-        self.assertEqual(player.hands[1].cards[0], card2)
+    def test_split_already_split(self):
+        #simulate already split hands
+        self.player.hands = [Hand(), Hand()]
+        self.player.hands[0].cards = [Card("Hearts", "8"), Card("Spades", "3")]
+        self.player.hands[1].cards = [Card("Hearts", "8"), Card("Spades", "3")]
+        self.assertFalse(self.player.split(self.deck, "10"))
+        self.assertEqual(len(self.player.hands), 2)
+
+    def test_split_ace_pair(self):
+        #simulate a pair of Aces
+        self.player.hands[0].cards = [Card("Hearts", "Ace"), Card("Spades", "Ace")]
+        self.assertTrue(self.player.split(self.deck, "10"))
+        self.assertEqual(len(self.player.hands), 2)
+        self.assertEqual(self.player.hands[0].cards[0].rank, "Ace")
+        self.assertEqual(self.player.hands[1].cards[0].rank, "Ace")
+
+    def test_split_draw_card(self):
+        #simulate a pair of 9s and ensure new cards are drawn after split
+        self.player.hands[0].cards = [Card("Hearts", "9"), Card("Spades", "9")]
+        initial_deck_count = len(self.deck.cards)
+        self.assertTrue(self.player.split(self.deck, "10"))
+        self.assertEqual(len(self.player.hands), 2)
+        self.assertEqual(
+            len(self.deck.cards), initial_deck_count - 2
+        )  #two cards should be drawn
 
 
 if __name__ == "__main__":
