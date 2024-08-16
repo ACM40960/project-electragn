@@ -180,7 +180,9 @@ class Game:
 
     #display the player's hand and the dealer's initial card
     def show_hands(self, hand_index=0):
-        print(f"Player's hand: {self.player.hands[hand_index].display_hand()} - Score: {self.player.hands[hand_index].total_score}")
+        print(
+            f"Player's hand: {self.player.hands[hand_index].display_hand()} - Score: {self.player.hands[hand_index].total_score}"
+            )
         print(f"Dealer's initial card: {self.dealer.show_uphand()}")
 
 
@@ -503,7 +505,16 @@ def main():
     #save all results to a single CSV file with expanded headers
     with open('simulation_results_detailed_with_split.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
+        writer.writerow(
+            ['Strategy', 
+             'Num_Decks', 
+             'Wins', 
+             'Losses', 
+             'Ties', 
+             'House Edge', 
+             'Player Scores', 
+             'Dealer Scores']
+            )
         writer.writerows(results_data)
 
 
