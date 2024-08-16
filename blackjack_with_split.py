@@ -514,7 +514,7 @@ def main():
              'House Edge', 
              'Player Scores', 
              'Dealer Scores']
-            )
+        )
         writer.writerows(results_data)
 
 
