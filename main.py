@@ -375,7 +375,18 @@ def main():
     #save all results to a single CSV file with expanded headers
     with open('simulation_results_detailed.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Strategy', 'Num_Decks', 'Wins', 'Losses', 'Ties', 'House Edge', 'Player Scores', 'Dealer Scores'])
+        writer.writerow(
+            [
+                'Strategy',
+                'Num_Decks', 
+                'Wins', 
+                'Losses', 
+                'Ties', 
+                'House Edge', 
+                'Player Scores', 
+                'Dealer Scores'
+            ]
+        )
         writer.writerows(results_data)
 
 
