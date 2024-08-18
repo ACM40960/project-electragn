@@ -36,6 +36,7 @@ Ensure you have the following dependencies installed:
 **Installation:**
 
 Clone the repository and navigate to the project directory. 
+
 You can install the required packages using pip:
 
 ```bash
@@ -145,7 +146,7 @@ To run the extended simulation that includes the 'split' action:
 
 **Testing the Split Action:**
 
-Notes \- The split action in \`blackjack\_with\_split.py\` is a rare event, hence the separate test file to verify its functionality.
+The split action in \`blackjack\_with\_split.py\` is a rare event, hence the separate test file to verify its functionality.
 
 To test if the 'split' action is functioning correctly:
 
