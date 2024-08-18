@@ -35,7 +35,8 @@ Ensure you have the following dependencies installed:
 
 **Installation:**
 
-Clone the repository and navigate to the project directory. You can install the required packages using pip.
+Clone the repository and navigate to the project directory. 
+You can install the required packages using pip:
 
 ```bash
  pip install matplotlib pandas numpy
